@@ -34,7 +34,10 @@ Resources:
           Key: "project"
           Value: "sam-app"
       PublicAccessBlockConfiguration:
-          RestrictPublicBuckets: false
+        BlockPublicAcls : true
+        BlockPublicPolicy : true
+        IgnorePublicAcls : true
+        RestrictPublicBuckets : true
 
 Outputs:
   # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
