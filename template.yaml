@@ -27,7 +27,12 @@ Resources:
   MyBucket:
     # AWS CloudFormation resource to create an S3 bucket
     Type: 'AWS::S3::Bucket'
-    BucketName: 'ga-test-bucket'
+    Properties:
+      BucketName: ga-sam-app-bkup
+      Tags:
+        -
+          Key: "project"
+          Value: "sam-app"
 
 Outputs:
   # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
