@@ -24,6 +24,11 @@ Resources:
             Path: /hello
             Method: get
 
+  MyBucket:
+    # AWS CloudFormation resource to create an S3 bucket
+    Type: 'AWS::S3::Bucket'
+    BucketName: 'ga-test-bucket'
+
 Outputs:
   # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
   # Find out more about other implicit resources you can reference within SAM
