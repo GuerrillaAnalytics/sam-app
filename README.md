@@ -1,4 +1,6 @@
 # sam-app
+https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-getting-started-hello-world.html
+
 
 This is a sample template for sam-app - Below is a brief explanation of what we have generated for you:
 
@@ -98,7 +100,7 @@ aws cloudformation describe-stacks \
     --stack-name sam-app \
     --query 'Stacks[].Outputs[?OutputKey==`HelloWorldApi`]' \
     --output table
-``` 
+```
 
 ## Fetch, tail, and filter Lambda function logs
 
@@ -207,4 +209,3 @@ aws cloudformation describe-stacks \
 # Tail Lambda function Logs using Logical name defined in SAM Template
 sam logs -n HelloWorldFunction --stack-name sam-app --tail
 ```
-
