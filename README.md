@@ -1,6 +1,19 @@
 # sam-app
 https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-getting-started-hello-world.html
 
+## Setup
+* Install a version of Python
+```pyenv install 3.7.4 ```
+
+* Create a virtualenv
+```virtualenv .venv --python python3.7```
+
+* activate the virtual environment
+```. .venv/bin/activate```
+
+* install packages in the active virtual environment
+```pip install -r requirements.txt```
+
 
 This is a sample template for sam-app - Below is a brief explanation of what we have generated for you:
 
