@@ -1,6 +1,10 @@
 # sam-app
 https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-getting-started-hello-world.html
 
+# Lambda layer
+Hack found [here](https://bryson3gps.wordpress.com/2018/12/06/trick-sam-into-building-your-lambda-layers/)
+to make layers work and reduce the package size of other lambdas. 
+
 ## Setup
 * Install a version of Python
 ```pyenv install 3.7.4 ```
