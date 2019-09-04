@@ -1,9 +1,5 @@
 import json
-import pandas as pd
-import os
-import sys
 
-sys.path.append("/opt")
 # import requests
 
 
@@ -36,12 +32,6 @@ def lambda_handler(event, context):
     #     print(e)
 
     #     raise e
-
-    # initialize list of lists
-    data = [['tom', 10], ['nick', 15], ['juli', 14]]
-
-    # Create the pandas DataFrame
-    df = pd.DataFrame(data, columns=['Name', 'Age'])
 
     return {
         "statusCode": 200,
