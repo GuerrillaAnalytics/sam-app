@@ -14,6 +14,7 @@ Globals:
 Resources:
   HelloWorldFunction:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Description: A simple hellow world lambda
     Properties:
       CodeUri: hello_world/
       Handler: app.lambda_handler
@@ -24,6 +25,27 @@ Resources:
           Properties:
             Path: /hello
             Method: get
+  DataScience:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Description: orphaned lambda for Layers hack
+    Properties:
+      Runtime: python3.7
+      CodeUri: ./layers/DataScience
+      Handler: data_science.lambda_handler
+
+  DataScienceLayer:
+    Type: AWS::Serverless::LayerVersion
+    Properties:
+      LayerName: DataScience
+      Description: >-
+        DataScience libraries
+      ContentUri: ./.aws-sam/build/DataScience
+      CompatibleRuntimes:
+        - python3.7
+        - python3.6
+      RetentionPolicy: Delete
+    DependsOn:
+      - DataScience
 
   MyBucket:
     # AWS CloudFormation resource to create an S3 bucket
