@@ -1,11 +1,8 @@
 import json
-import pandas as pd
 import os
 import sys
 
-sys.path.append("/opt")
-# import requests
-
+import pandas as pd
 
 def lambda_handler(event, context):
     """Sample pure Lambda function
