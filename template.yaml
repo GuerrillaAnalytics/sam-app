@@ -18,8 +18,6 @@ Resources:
     Properties:
       CodeUri: hello_world/
       Handler: app.lambda_handler
-      Layers:
-        - !Ref DataScienceDepLayer
       Runtime: python3.7
       Events:
         HelloWorld:
@@ -28,16 +26,12 @@ Resources:
             Path: /hello
             Method: get
 
-  DataScienceDepLayer:
-    Type: AWS::Serverless::LayerVersion
-    Properties:
-      LayerName: sam-app-dependencies
-      Description: Dependencies for sam app
-      ContentUri: layers/python.zip
-      CompatibleRuntimes:
-        - python3.7
-      LicenseInfo: 'MIT'
-      RetentionPolicy: Delete
+  python:
+     Type: AWS::Serverless::Function
+     Properties:
+       Runtime: python3.7
+       CodeUri: data-science-layer
+       Handler: python.lambda_handler
 
   MyBucket:
     # AWS CloudFormation resource to create an S3 bucket

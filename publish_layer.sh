@@ -1,2 +1,0 @@
-#!/usr/bin/env bash
-aws lambda publish-layer-version --layer-name sam-app-dependencies --description "test layer for data science" --zip-file fileb://./layers/python.zip --compatible-runtimes python3.7 --profile personal
