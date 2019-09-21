@@ -25,13 +25,20 @@ Resources:
           Properties:
             Path: /hello
             Method: get
+      Layers:
+        - !Ref MyLambdaLayer
 
-  python:
-     Type: AWS::Serverless::Function
-     Properties:
-       Runtime: python3.7
-       CodeUri: data-science-layer
-       Handler: python.lambda_handler
+  MyLambdaLayer:
+    Type: AWS::Serverless::LayerVersion
+    Properties:
+      LayerName: MyLambdaLayer
+      Description: My Lambda Layer with Deserialize Function, Objectpath Module & AWS Regions JSON
+      ContentUri: .aws-sam/layers/python/python.zip
+      CompatibleRuntimes:
+        - python3.6
+        - python3.7
+      LicenseInfo: MIT
+      RetentionPolicy: Retain
 
   MyBucket:
     # AWS CloudFormation resource to create an S3 bucket
@@ -61,3 +68,8 @@ Outputs:
   HelloWorldFunctionIamRole:
     Description: "Implicit IAM Role created for Hello World function"
     Value: !GetAtt HelloWorldFunctionRole.Arn
+    MyLambdaLayerARN:
+        Value: !Ref MyLambdaLayer
+        Description: MyLambdaLayer ARN
+        Export:
+            Name: my-lambda-layer-arn
