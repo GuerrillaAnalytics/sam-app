@@ -33,9 +33,8 @@ Resources:
     Properties:
       LayerName: MyLambdaLayer
       Description: My Lambda Layer with Deserialize Function, Objectpath Module & AWS Regions JSON
-      ContentUri: .aws-sam/layers/python/python.zip
+      ContentUri: ./build/data-science-layer.zip
       CompatibleRuntimes:
-        - python3.6
         - python3.7
       LicenseInfo: MIT
       RetentionPolicy: Retain
@@ -68,8 +67,6 @@ Outputs:
   HelloWorldFunctionIamRole:
     Description: "Implicit IAM Role created for Hello World function"
     Value: !GetAtt HelloWorldFunctionRole.Arn
-    MyLambdaLayerARN:
-        Value: !Ref MyLambdaLayer
-        Description: MyLambdaLayer ARN
-        Export:
-            Name: my-lambda-layer-arn
+  MyLambdaLayerARN:
+    Value: !Ref MyLambdaLayer
+    Description: MyLambdaLayer ARN
