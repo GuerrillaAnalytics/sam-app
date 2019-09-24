@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # see https://nordcloud.com/lambda-layers-for-python-runtime/
-echo 'Setting correct build path for zipping a Python lambda'
-export PYDIR=build/python/lib/python3.7/site-packages
+echo 'Setting correct target build path for zipping a Python lambda'
+export PY_DIR=build/python/lib/python3.7/site-packages
 
 mkdir -p $PY_DIR
 
