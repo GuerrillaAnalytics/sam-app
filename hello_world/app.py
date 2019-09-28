@@ -34,11 +34,17 @@ def lambda_handler(event, context):
 
     #     raise e
 
-    # initialize list of lists
-    data = [['tom', 10], ['nick', 15], ['juli', 14]]
+    print('/opt contents: ')
+    for root, dirs, files in os.walk("/opt/", topdown=True):
+        for name in files:
+            print(os.path.join(root, name))
+        for name in dirs:
+            print(os.path.join(root, name))
 
-    # Create the pandas DataFrame
+    # initialize list of lists and example data frame
+    data = [['tom', 10], ['nick', 15], ['juli', 14]]
     df = pd.DataFrame(data, columns=['Name', 'Age'])
+    print(df.head())
 
     return {
         "statusCode": 200,
