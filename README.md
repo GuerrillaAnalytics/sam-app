@@ -1,12 +1,17 @@
 # sam-app
 https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-getting-started-hello-world.html
 
-# Lambda layer
-Hack found [here](https://bryson3gps.wordpress.com/2018/12/06/trick-sam-into-building-your-lambda-layers/)
-to make layers work and reduce the package size of other lambdas. 
+## Modifications
+* added a Lambda Layer made of library dependencies
+* added an S3 bucket for storing data
+* works with `sam local`
 
+## Pre-requisites 
+* AWS CLI installed and configured as per [AWS instructions](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html).
+* SAM CLI installed and configured as per [Installing the AWS SAM CLI](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-install.html).
+* If you have multipled profiles on your machine, set your profile using the `AWS_PROFILE` environment variable.
 ## Setup
-* Install a version of Python
+* Install a version 3.7 of Python. 
 ```pyenv install 3.7.4 ```
 
 * Create a virtualenv
@@ -19,6 +24,7 @@ to make layers work and reduce the package size of other lambdas.
 ```pip install -r requirements.txt```
 
 
+# Text from `sam init` command
 This is a sample template for sam-app - Below is a brief explanation of what we have generated for you:
 
 ```bash

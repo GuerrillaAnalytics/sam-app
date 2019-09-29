@@ -9,7 +9,8 @@ Description: >
 # More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
 Globals:
   Function:
-    Timeout: 3
+    Timeout: 60
+    Runtime: python3.7
 
 Resources:
   HelloWorldFunction:
@@ -18,7 +19,8 @@ Resources:
     Properties:
       CodeUri: hello_world/
       Handler: app.lambda_handler
-      Runtime: python3.7
+      MemorySize: 128
+      Timeout: 60
       Events:
         HelloWorld:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
@@ -32,7 +34,7 @@ Resources:
     Type: AWS::Serverless::LayerVersion
     Properties:
       LayerName: data-science-layer
-      Description: My Lambda Layer for Data Science libraries
+      Description: Lambda Layer for Data Science libraries
       ContentUri: ./build/data-science-layer  # This must point to a 'python root' folder where you have pip installed libraries
       CompatibleRuntimes:
         - python3.7
@@ -43,10 +45,9 @@ Resources:
     # AWS CloudFormation resource to create an S3 bucket
     Type: 'AWS::S3::Bucket'
     Properties:
-      BucketName: ga-sam-app-data
+      BucketName: sam-app-data
       Tags:
-        -
-          Key: "project"
+        - Key: "project"
           Value: "sam-app"
       PublicAccessBlockConfiguration:
         BlockPublicAcls : true
