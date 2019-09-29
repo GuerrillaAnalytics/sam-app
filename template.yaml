@@ -14,7 +14,7 @@ Globals:
 Resources:
   HelloWorldFunction:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
-    Description: A simple hellow world lambda
+    Description: A simple hello world lambda
     Properties:
       CodeUri: hello_world/
       Handler: app.lambda_handler
@@ -33,7 +33,7 @@ Resources:
     Properties:
       LayerName: MyLambdaLayer
       Description: My Lambda Layer for Data Science libraries
-      ContentUri: ./data-science-layer
+      ContentUri: ./build/data-science-layer
       CompatibleRuntimes:
         - python3.7
       LicenseInfo: MIT

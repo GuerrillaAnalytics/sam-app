@@ -7,10 +7,13 @@
 set -x
 
 echo 'Setting correct target build path for zipping a Python lambda'
-export BUILD_ROOT=data-science-layer/
+#export BUILD_ROOT=data-science-layer/
+export BUILD_ROOT=build/data-science-layer/
+# code must exist under this path or deployment will silently fail
 export PY_DIR=python/lib/python3.7/site-packages
 export BUILD_DIR=$BUILD_ROOT$PY_DIR
 mkdir -p $BUILD_DIR
+
 
 echo 'Installing requirements into correct lambda path'
 pip install -r data-science-layer/requirements.txt -t $BUILD_DIR
