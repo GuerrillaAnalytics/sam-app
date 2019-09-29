@@ -33,7 +33,7 @@ Resources:
     Properties:
       LayerName: MyLambdaLayer
       Description: My Lambda Layer with Deserialize Function, Objectpath Module & AWS Regions JSON
-      ContentUri: ./build
+      ContentUri: ./data-science-layer
       CompatibleRuntimes:
         - python3.7
       LicenseInfo: MIT
@@ -43,7 +43,7 @@ Resources:
     # AWS CloudFormation resource to create an S3 bucket
     Type: 'AWS::S3::Bucket'
     Properties:
-      BucketName: ga-sam-app-bkup
+      BucketName: ga-sam-app
       Tags:
         -
           Key: "project"
