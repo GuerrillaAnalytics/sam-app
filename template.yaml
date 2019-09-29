@@ -32,27 +32,27 @@ Resources:
     Type: AWS::Serverless::LayerVersion
     Properties:
       LayerName: MyLambdaLayer
-      Description: My Lambda Layer with Deserialize Function, Objectpath Module & AWS Regions JSON
+      Description: My Lambda Layer for Data Science libraries
       ContentUri: ./data-science-layer
       CompatibleRuntimes:
         - python3.7
       LicenseInfo: MIT
       RetentionPolicy: Retain
 
-#  MyBucket:
-#    # AWS CloudFormation resource to create an S3 bucket
-#    Type: 'AWS::S3::Bucket'
-#    Properties:
-#      BucketName: ga-sam-app
-#      Tags:
-#        -
-#          Key: "project"
-#          Value: "sam-app"
-#      PublicAccessBlockConfiguration:
-#        BlockPublicAcls : true
-#        BlockPublicPolicy : true
-#        IgnorePublicAcls : true
-#        RestrictPublicBuckets : true
+  MyBucket:
+    # AWS CloudFormation resource to create an S3 bucket
+    Type: 'AWS::S3::Bucket'
+    Properties:
+      BucketName: ga-sam-app-data
+      Tags:
+        -
+          Key: "project"
+          Value: "sam-app"
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls : true
+        BlockPublicPolicy : true
+        IgnorePublicAcls : true
+        RestrictPublicBuckets : true
 
 Outputs:
   # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
