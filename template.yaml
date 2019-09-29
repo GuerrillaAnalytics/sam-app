@@ -26,14 +26,14 @@ Resources:
             Path: /hello
             Method: get
       Layers:
-        - !Ref MyLambdaLayer
+        - !Ref DataScienceLayer
 
-  MyLambdaLayer:
+  DataScienceLayer:
     Type: AWS::Serverless::LayerVersion
     Properties:
-      LayerName: MyLambdaLayer
+      LayerName: data-science-layer
       Description: My Lambda Layer for Data Science libraries
-      ContentUri: ./build/data-science-layer
+      ContentUri: ./build/data-science-layer  # This must point to a 'python root' folder where you have pip installed libraries
       CompatibleRuntimes:
         - python3.7
       LicenseInfo: MIT
