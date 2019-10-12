@@ -10,6 +10,8 @@ https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/s
 * AWS CLI installed and configured as per [AWS instructions](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html).
 * SAM CLI installed and configured as per [Installing the AWS SAM CLI](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-install.html).
 * If you have multipled profiles on your machine, set your profile using the `AWS_PROFILE` environment variable.
+* Docker installed and logged into DockerHub so you can test locally. 
+
 ## Setup
 * Install a version 3.7 of Python. 
 ```pyenv install 3.7.4 ```
@@ -22,6 +24,16 @@ https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/s
 
 * install packages in the active virtual environment
 ```pip install -r requirements.txt```
+
+* configure `AWS CLI` as described [here](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html).
+
+* configure `SAM CLI` as described [here](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-install.html).
+
+* Set up step functions local with Docker as described [here](https://docs.aws.amazon.com/step-functions/latest/dg/sfn-local-docker.html)
+
+    * configure step functions local as described [here](https://docs.aws.amazon.com/step-functions/latest/dg/sfn-local-config-options.html#docker-credentials). 
+    Note that the documentation example as of 2019-10-10 is missing the `AWS_ACCOUNT_ID` configuration option. 
+    You will also need to set the `WAIT_TIME_SCALE` option to avoid errors.
 
 
 # Text from `sam init` command

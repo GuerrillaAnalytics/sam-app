@@ -17,6 +17,8 @@ Resources:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Description: A simple hello world lambda
     Properties:
+      Tags:
+        
       CodeUri: hello_world/
       Handler: app.lambda_handler
       MemorySize: 128
