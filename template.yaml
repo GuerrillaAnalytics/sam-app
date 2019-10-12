@@ -13,7 +13,7 @@ Globals:
     Runtime: python3.7
 
 Resources:
-  LambdaExecutionRole:
+  RoleLambdaExecution:
     Type: "AWS::IAM::Role"
     Properties:
       AssumeRolePolicyDocument:
@@ -24,7 +24,7 @@ Resources:
               Service: lambda.amazonaws.com
             Action: "sts:AssumeRole"
 
-  StatesExecutionRole:
+  RoleStatesExecution:
     Type: "AWS::IAM::Role"
     Properties:
       AssumeRolePolicyDocument:
@@ -108,7 +108,7 @@ Resources:
               }
             }
           - {lambdaArn: !GetAtt [ HelloWorldFunction, Arn ]}
-      RoleArn: !GetAtt [ StatesExecutionRole, Arn ]
+      RoleArn: !GetAtt [ RoleStatesExecution, Arn ]
 
 Outputs:
   # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
