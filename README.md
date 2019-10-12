@@ -1,12 +1,20 @@
 # sam-app
 https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-getting-started-hello-world.html
 
-# Lambda layer
-Hack found [here](https://bryson3gps.wordpress.com/2018/12/06/trick-sam-into-building-your-lambda-layers/)
-to make layers work and reduce the package size of other lambdas. 
+## Modifications
+* added a Lambda Layer made of library dependencies
+* added an S3 bucket for storing data
+* lambda function and layer work with `sam local`
+* includes a minimal step function that has to be started from the AWS console
+
+## Pre-requisites 
+* install and configure `AWS CLI` as described [here](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html).
+* install configure `SAM CLI` as described [here](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-install.html).
+* If you have multipled profiles on your machine, set your profile using the `AWS_PROFILE` environment variable.
+* Docker installed and logged into DockerHub so you can test locally. 
 
 ## Setup
-* Install a version of Python
+* Install a version 3.7 of Python. 
 ```pyenv install 3.7.4 ```
 
 * Create a virtualenv
@@ -18,7 +26,14 @@ to make layers work and reduce the package size of other lambdas.
 * install packages in the active virtual environment
 ```pip install -r requirements.txt```
 
+* Set up step functions local with Docker as described [here](https://docs.aws.amazon.com/step-functions/latest/dg/sfn-local-docker.html)
 
+    * configure step functions local as described [here](https://docs.aws.amazon.com/step-functions/latest/dg/sfn-local-config-options.html#docker-credentials). 
+    Note that the documentation example as of 2019-10-10 is missing the `AWS_ACCOUNT_ID` configuration option. 
+    You will also need to set the `WAIT_TIME_SCALE` option to avoid errors.
+
+
+# Text from `sam init` command
 This is a sample template for sam-app - Below is a brief explanation of what we have generated for you:
 
 ```bash

@@ -9,58 +9,106 @@ Description: >
 # More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
 Globals:
   Function:
-    Timeout: 3
+    Timeout: 60
+    Runtime: python3.7
 
 Resources:
+  RoleLambdaExecution:
+    Type: "AWS::IAM::Role"
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: "sts:AssumeRole"
+
+  RoleStatesExecution:
+    Type: "AWS::IAM::Role"
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: "Allow"
+            Principal:
+              Service:
+                - !Sub states.${AWS::Region}.amazonaws.com
+            Action: "sts:AssumeRole"
+      Path: "/"
+      Policies:
+        - PolicyName: StatesExecutionPolicy
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - "lambda:InvokeFunction"
+                Resource: "*"
+
   HelloWorldFunction:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
-    Description: A simple hellow world lambda
+    Description: A simple hello world lambda
     Properties:
+      Tags:
+        
       CodeUri: hello_world/
       Handler: app.lambda_handler
-      Runtime: python3.7
+      MemorySize: 128
+      Timeout: 60
       Events:
         HelloWorld:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
           Properties:
             Path: /hello
             Method: get
-  DataScience:
-    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
-    Description: orphaned lambda for Layers hack
-    Properties:
-      Runtime: python3.7
-      CodeUri: ./layers/DataScience
-      Handler: data_science.lambda_handler
+      Layers:
+        - !Ref DataScienceLayer
 
   DataScienceLayer:
     Type: AWS::Serverless::LayerVersion
     Properties:
-      LayerName: DataScience
-      Description: >-
-        DataScience libraries
-      ContentUri: ./.aws-sam/build/DataScience
+      LayerName: data-science-layer
+      Description: Lambda Layer for Data Science libraries
+      ContentUri: ./build/data-science-layer  # This must point to a 'python root' folder where you have pip installed libraries
       CompatibleRuntimes:
         - python3.7
-        - python3.6
-      RetentionPolicy: Delete
-    DependsOn:
-      - DataScience
+      LicenseInfo: MIT
+      RetentionPolicy: Retain
 
   MyBucket:
     # AWS CloudFormation resource to create an S3 bucket
     Type: 'AWS::S3::Bucket'
     Properties:
-      BucketName: ga-sam-app-bkup
+      BucketName: sam-app-data
       Tags:
-        -
-          Key: "project"
+        - Key: "project"
           Value: "sam-app"
       PublicAccessBlockConfiguration:
         BlockPublicAcls : true
         BlockPublicPolicy : true
         IgnorePublicAcls : true
         RestrictPublicBuckets : true
+
+  HelloWorldStateMachine:
+    Type: "AWS::StepFunctions::StateMachine"
+    Properties:
+      DefinitionString:
+        !Sub
+          - |-
+            {
+              "Comment": "A Hello World step function using an AWS Lambda function",
+              "StartAt": "HelloWorld",
+              "States": {
+                "HelloWorld": {
+                  "Type": "Task",
+                  "Resource": "${lambdaArn}",
+                  "End": true
+                }
+              }
+            }
+          - {lambdaArn: !GetAtt [ HelloWorldFunction, Arn ]}
+      RoleArn: !GetAtt [ RoleStatesExecution, Arn ]
 
 Outputs:
   # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
@@ -69,9 +117,10 @@ Outputs:
   HelloWorldApi:
     Description: "API Gateway endpoint URL for Prod stage for Hello World function"
     Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/hello/"
-  HelloWorldFunction:
-    Description: "Hello World Lambda Function ARN"
-    Value: !GetAtt HelloWorldFunction.Arn
-  HelloWorldFunctionIamRole:
-    Description: "Implicit IAM Role created for Hello World function"
-    Value: !GetAtt HelloWorldFunctionRole.Arn
+
+    #  HelloWorldFunction:
+    #    Description: "Hello World Lambda Function ARN"
+    #    Value: !GetAtt HelloWorldFunction.Arn
+    #  HelloWorldFunctionIamRole:
+    #    Description: "Implicit IAM Role created for Hello World function"
+    #    Value: !GetAtt HelloWorldFunctionRole.Arn
