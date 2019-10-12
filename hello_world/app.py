@@ -34,12 +34,12 @@ def lambda_handler(event, context):
 
     #     raise e
 
-    print('/opt contents: ')
-    for root, dirs, files in os.walk("/opt/", topdown=True):
-        for name in files:
-            print(os.path.join(root, name))
-        for name in dirs:
-            print(os.path.join(root, name))
+    # print('/opt contents: ')
+    # for root, dirs, files in os.walk("/opt/", topdown=True):
+    #     for name in files:
+    #         print(os.path.join(root, name))
+    #     for name in dirs:
+    #         print(os.path.join(root, name))
 
     # initialize list of lists and example data frame
     data = [['tom', 10], ['nick', 15], ['juli', 14]]
