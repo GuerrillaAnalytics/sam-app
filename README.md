@@ -4,7 +4,8 @@ https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/s
 ## Modifications
 * added a Lambda Layer made of library dependencies
 * added an S3 bucket for storing data
-* works with `sam local`
+* lambda function and layer work with `sam local`
+* includes a minimal step function that has to be started from the AWS console
 
 ## Pre-requisites 
 * install and configure `AWS CLI` as described [here](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html).
