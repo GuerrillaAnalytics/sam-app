@@ -13,6 +13,8 @@ Globals:
     Runtime: python3.7
 
 Resources:
+
+
   RoleLambdaExecution:
     Type: "AWS::IAM::Role"
     Properties:
@@ -56,12 +58,12 @@ Resources:
       Handler: app.lambda_handler
       MemorySize: 128
       Timeout: 60
-      Events:
-        HelloWorld:
-          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
-          Properties:
-            Path: /hello
-            Method: get
+      #      Events:
+      #        HelloWorld:
+      #          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+      #          Properties:
+      #            Path: /hello
+      #            Method: get
       Layers:
         - !Ref DataScienceLayer
 
@@ -125,13 +127,13 @@ Outputs:
   # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
   # Find out more about other implicit resources you can reference within SAM
   # https://github.com/awslabs/serverless-application-model/blob/master/docs/internals/generated_resources.rst#api
-  HelloWorldApi:
-    Description: "API Gateway endpoint URL for Prod stage for Hello World function"
-    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/hello/"
+  #  HelloWorldApi:
+  #    Description: "API Gateway endpoint URL for Prod stage lambda for Hello World function"
+  #    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/hello/"
 
-    #  HelloWorldFunction:
-    #    Description: "Hello World Lambda Function ARN"
-    #    Value: !GetAtt HelloWorldFunction.Arn
+  HelloWorldFunction:
+    Description: "Hello World Lambda Function ARN"
+    Value: !GetAtt HelloWorldFunction.Arn
     #  HelloWorldFunctionIamRole:
     #    Description: "Implicit IAM Role created for Hello World function"
     #    Value: !GetAtt HelloWorldFunctionRole.Arn
