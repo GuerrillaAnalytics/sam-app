@@ -98,9 +98,14 @@ Resources:
           - |-
             {
               "Comment": "A Hello World step function using an AWS Lambda function",
-              "StartAt": "HelloWorld",
+              "StartAt": "Step1Test",
               "States": {
-                "HelloWorld": {
+                "Step1Test": {
+                  "Type": "Task",
+                  "Resource": "${lambdaArn}",
+                  "Next": "Step2Test"
+                },
+                  "Step2Test": {
                   "Type": "Task",
                   "Resource": "${lambdaArn}",
                   "End": true
@@ -109,6 +114,12 @@ Resources:
             }
           - {lambdaArn: !GetAtt [ HelloWorldFunction, Arn ]}
       RoleArn: !GetAtt [ RoleStatesExecution, Arn ]
+
+  LogGroupHelloWorld:
+    Type: AWS::Logs::LogGroup
+    DependsOn: HelloWorldStateMachine
+    Properties:
+      RetentionInDays: 1
 
 Outputs:
   # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
