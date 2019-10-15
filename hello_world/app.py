@@ -46,10 +46,13 @@ def lambda_handler(event, context):
     df = pd.DataFrame(data, columns=['Name', 'Age'])
     print(df.head())
 
+    print(event)
+    times=1
+
     return {
         "statusCode": 200,
         "body": json.dumps({
-            "message": "hello world",
+            "message": "hello world, times " + str(times),
             # "location": ip.text.replace("\n", "")
         }),
     }

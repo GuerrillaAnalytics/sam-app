@@ -31,12 +31,10 @@ def lambda_handler(event, context):
     #     print(e)
 
     #     raise e
-    print('Here is the event:')
+    # Assume an event payload of two numbers
+    e = json.loads(json.dumps(event))
+    number1 = e['key1']
+    number2 = e['key2']
+    times = number1 * number2
 
-    return {
-        "statusCode": 200,
-        "body": json.dumps({
-            "message": "Starting state machine!",
-            # "location": ip.text.replace("\n", "")
-        }),
-    }
+    return times
