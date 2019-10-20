@@ -13,6 +13,8 @@ Globals:
     Runtime: python3.7
 
 Resources:
+
+
   RoleLambdaExecution:
     Type: "AWS::IAM::Role"
     Properties:
@@ -45,6 +47,23 @@ Resources:
                 Action:
                   - "lambda:InvokeFunction"
                 Resource: "*"
+
+  StartStateMachineFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Description: A lambda to parse and set up state machine steps
+    Properties:
+      Tags:
+
+      CodeUri: start_state_machine/
+      Handler: app.lambda_handler
+      MemorySize: 128
+      Timeout: 60
+      Events:
+        Start:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            Path: /start
+            Method: get
 
   HelloWorldFunction:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
@@ -91,36 +110,57 @@ Resources:
         RestrictPublicBuckets : true
 
   HelloWorldStateMachine:
+    # Hard coded inputs parameters are specified here
+    # See examples here
+    # https://docs.aws.amazon.com/step-functions/latest/dg/input-output-example.html
     Type: "AWS::StepFunctions::StateMachine"
     Properties:
       DefinitionString:
-        !Sub
-          - |-
+        Fn::Sub:
+          |-
             {
               "Comment": "A Hello World step function using an AWS Lambda function",
-              "StartAt": "HelloWorld",
+              "StartAt": "Step1Test",
               "States": {
-                "HelloWorld": {
+                "Step1Test": {
                   "Type": "Task",
-                  "Resource": "${lambdaArn}",
+                  "Resource": "${StartStateMachineFunction.Arn}",
+                  "Next": "Step2Test"
+                },
+                  "Step2Test": {
+                  "Type": "Task",
+                  "Resource": "${HelloWorldFunction.Arn}",
                   "End": true
                 }
               }
             }
-          - {lambdaArn: !GetAtt [ HelloWorldFunction, Arn ]}
       RoleArn: !GetAtt [ RoleStatesExecution, Arn ]
+      StateMachineName: data-pipeline
 
+  LogGroupHelloWorld:
+    Type: AWS::Logs::LogGroup
+    DependsOn: HelloWorldStateMachine
+    Properties:
+      RetentionInDays: 1
+
+# The optional Outputs section declares output values that you can import
+# into other stacks (to create cross-stack references), return in
+# response (to describe stack calls), or view on the AWS CloudFormation
+# console
 Outputs:
   # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
   # Find out more about other implicit resources you can reference within SAM
   # https://github.com/awslabs/serverless-application-model/blob/master/docs/internals/generated_resources.rst#api
   HelloWorldApi:
-    Description: "API Gateway endpoint URL for Prod stage for Hello World function"
+    Description: "API Gateway endpoint URL for Prod stage lambda for Hello World function"
     Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/hello/"
 
-    #  HelloWorldFunction:
-    #    Description: "Hello World Lambda Function ARN"
-    #    Value: !GetAtt HelloWorldFunction.Arn
+  HelloWorldFunction:
+    Description: "Hello World Lambda Function ARN"
+    Value: !GetAtt HelloWorldFunction.Arn
+  StartStateMachineFunction:
+    Description: "Hello World Lambda at start of state machine"
+    Value: !GetAtt StartStateMachineFunction.Arn
     #  HelloWorldFunctionIamRole:
     #    Description: "Implicit IAM Role created for Hello World function"
     #    Value: !GetAtt HelloWorldFunctionRole.Arn

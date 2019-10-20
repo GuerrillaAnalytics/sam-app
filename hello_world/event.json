@@ -1,0 +1,4 @@
+{
+  "statusCode": 200,
+  "body": "{\"message\": \"starting state machine, times 4\", \"environment\": \"dev\", \"number_of_hellos\": 4}"
+}

@@ -1,8 +1,8 @@
 import json
 import os
 import sys
-
-import pandas as pd
+import jsonschema
+from jsonschema import validate
 
 def lambda_handler(event, context):
     """Sample pure Lambda function
@@ -34,29 +34,21 @@ def lambda_handler(event, context):
 
     #     raise e
 
-    # print('/opt contents: ')
-    # for root, dirs, files in os.walk("/opt/", topdown=True):
-    #     for name in files:
-    #         print(os.path.join(root, name))
-    #     for name in dirs:
-    #         print(os.path.join(root, name))
 
-    # initialize list of lists and example data frame
-    data = [['tom', 10], ['nick', 15], ['juli', 14]]
-    df = pd.DataFrame(data, columns=['Name', 'Age'])
-    print(df.head())
-
-    print(event)
-
-    e = json.loads(event['body'])
-
-    times=e['number_of_hellos']
-    environment=e['environment']
+    # Assume an event payload of two numbers
+    e = json.loads(json.dumps(event))
+    environment = e['environment']
+    number_of_hellos = e['number_of_hellos']
+    times = number_of_hellos
 
     return {
         "statusCode": 200,
         "body": json.dumps({
-            "message": "hello world, times " + str(times),
+            "message": "starting state machine, times " + str(times),
+            "environment": environment,
+            "number_of_hellos": number_of_hellos
             # "location": ip.text.replace("\n", "")
         }),
     }
+
+

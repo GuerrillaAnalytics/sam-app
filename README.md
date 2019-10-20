@@ -1,11 +1,13 @@
-# sam-app
+# sam-app extension for Data Scientists
+This is a basic extension of the sam-app hello world project for data scientists.
 https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-getting-started-hello-world.html
 
 ## Modifications
-* added a Lambda Layer made of library dependencies
+* added a Lambda Layer made of a typical data science library dependency
 * added an S3 bucket for storing data
 * lambda function and layer work with `sam local`
-* includes a minimal step function that has to be started from the AWS console
+* includes a minimal step function to show chaining two lambdas together
+* input parameters can be passed to the step function, modified and passed between steps
 
 ## Pre-requisites 
 * install and configure `AWS CLI` as described [here](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html).
