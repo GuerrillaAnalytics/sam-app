@@ -47,7 +47,11 @@ def lambda_handler(event, context):
     print(df.head())
 
     print(event)
-    times=1
+
+    e = json.loads(event['body'])
+
+    times=e['number_of_hellos']
+    environment=e['environment']
 
     return {
         "statusCode": 200,

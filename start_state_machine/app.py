@@ -1,6 +1,8 @@
 import json
 import os
 import sys
+import jsonschema
+from jsonschema import validate
 
 def lambda_handler(event, context):
     """Sample pure Lambda function
@@ -31,10 +33,22 @@ def lambda_handler(event, context):
     #     print(e)
 
     #     raise e
+
+
     # Assume an event payload of two numbers
     e = json.loads(json.dumps(event))
-    number1 = e['key1']
-    number2 = e['key2']
-    times = number1 * number2
+    environment = e['environment']
+    number_of_hellos = e['number_of_hellos']
+    times = number_of_hellos
 
-    return times
+    return {
+        "statusCode": 200,
+        "body": json.dumps({
+            "message": "starting state machine, times " + str(times),
+            "environment": environment,
+            "number_of_hellos": number_of_hellos
+            # "location": ip.text.replace("\n", "")
+        }),
+    }
+
+
